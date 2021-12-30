@@ -1,3 +1,5 @@
+English Translation by MonkeyWhisper
+
 # qb-bossmenu
 New bossmenu converted to qb-menu and qb-input.
 qb-bossmenu and qb-gangmenu converted to qb-menu, merged into a single resource, and saves the account in the database.
