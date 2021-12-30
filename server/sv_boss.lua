@@ -163,7 +163,7 @@ RegisterNetEvent('qb-bossmenu:server:licenziaGiocatore', function(target)
 			Employee = player[1]
 			local job = {}
 			job.name = "unemployed"
-			job.label = "Disoccupato"
+			job.label = "Unemployed"
 			job.payment = 500
 			job.onduty = true
 			job.isboss = false
