@@ -29,14 +29,14 @@ RegisterNetEvent("qb-bossmenu:server:withdrawMoney", function(amount)
 		Accounts[job] = Accounts[job] - amount
 		xPlayer.Functions.AddMoney("cash", amount)
 	else
-		TriggerClientEvent('QBCore:Notify', src, "Importo non valido :/", "error")
+		TriggerClientEvent('QBCore:Notify', src, "Invalid Amount!", "error")
 		TriggerClientEvent('qb-bossmenu:client:mainmenu', src)
 		return
 	end
 	
 	exports.oxmysql:execute('UPDATE bossmenu SET amount = ? WHERE job_name = ?', { Accounts[job], job})
-	TriggerEvent('qb-log:server:CreateLog', 'bossmenu', 'Withdraw Money', "blue", xPlayer.PlayerData.name.. "Prelievo $" .. amount .. ' (' .. job .. ')', true)
-	TriggerClientEvent('QBCore:Notify', src, "Hai prelevato: $" ..amount, "success")
+	TriggerEvent('qb-log:server:CreateLog', 'bossmenu', 'Withdraw Money', "blue", xPlayer.PlayerData.name.. "Withdrawal $" .. amount .. ' (' .. job .. ')', true)
+	TriggerClientEvent('QBCore:Notify', src, "You have withdrawn: $" ..amount, "success")
 	TriggerClientEvent('qb-bossmenu:client:mainmenu', src)
 end)
 
@@ -58,8 +58,8 @@ RegisterNetEvent("qb-bossmenu:server:depositMoney", function(amount)
 	end
 
 	exports.oxmysql:execute('UPDATE bossmenu SET amount = ? WHERE job_name = ?', { Accounts[job], job })
-	TriggerEvent('qb-log:server:CreateLog', 'bossmenu', 'Deposit Money', "blue", xPlayer.PlayerData.name.. "Deposito $" .. amount .. ' (' .. job .. ')', true)
-	TriggerClientEvent('QBCore:Notify', src, "Hai depositato: $" ..amount, "success")
+	TriggerEvent('qb-log:server:CreateLog', 'bossmenu', 'Deposit Money', "blue", xPlayer.PlayerData.name.. "Deposit $" .. amount .. ' (' .. job .. ')', true)
+	TriggerClientEvent('QBCore:Notify', src, "You have deposited: $" ..amount, "success")
 	TriggerClientEvent('qb-bossmenu:client:mainmenu', src)
 end)
  
@@ -133,13 +133,13 @@ RegisterNetEvent('qb-bossmenu:server:aggiornaGrado', function(data)
 	local Employee = QBCore.Functions.GetPlayerByCitizenId(data.cid)
 	if Employee then
 		if Employee.Functions.SetJob(Player.PlayerData.job.name, data.grado) then
-			TriggerClientEvent('QBCore:Notify', src, "Grado cambiato con successo!", "success")
-			TriggerClientEvent('QBCore:Notify', Employee.PlayerData.source, "Ora il tuo grado è " ..data.nomegrado..".", "success")
+			TriggerClientEvent('QBCore:Notify', src, "Sucessfulluy promoted!", "success")
+			TriggerClientEvent('QBCore:Notify', Employee.PlayerData.source, "You have been promoted to" ..data.nomegrado..".", "success")
 		else
-			TriggerClientEvent('QBCore:Notify', src, "Questo grado non esiste", "error")
+			TriggerClientEvent('QBCore:Notify', src, "Promotion grade does not exist.", "error")
 		end
 	else
-		TriggerClientEvent('QBCore:Notify', src, "Giocatore offline", "error")
+		TriggerClientEvent('QBCore:Notify', src, "Civilian not in city.", "error")
 	end
 	TriggerClientEvent('qb-bossmenu:client:mainmenu', src)
 end)
@@ -152,10 +152,10 @@ RegisterNetEvent('qb-bossmenu:server:licenziaGiocatore', function(target)
 	if Employee then
 		if Employee.Functions.SetJob("unemployed", '0') then
 			TriggerEvent("qb-log:server:CreateLog", "bossmenu", "Job Fire", "red", Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. ' successfully fired ' .. Employee.PlayerData.charinfo.firstname .. " " .. Employee.PlayerData.charinfo.lastname .. " (" .. Player.PlayerData.job.name .. ")", false)
-			TriggerClientEvent('QBCore:Notify', src, "Dipendente licenziato!", "success")
-			TriggerClientEvent('QBCore:Notify', Employee.PlayerData.source , "Sei stato licenziato", "error")
+			TriggerClientEvent('QBCore:Notify', src, "Employee fired!", "success")
+			TriggerClientEvent('QBCore:Notify', Employee.PlayerData.source , "You have been fired! Good luck.", "error")
 		else
-			TriggerClientEvent('QBCore:Notify', src, "Errore..", "error")
+			TriggerClientEvent('QBCore:Notify', src, "Error..", "error")
 		end
 	else
 		local player = exports.oxmysql:executeSync('SELECT * FROM players WHERE citizenid = ? LIMIT 1', { target })
@@ -171,10 +171,10 @@ RegisterNetEvent('qb-bossmenu:server:licenziaGiocatore', function(target)
 			job.grade.name = nil
 			job.grade.level = 0
 			exports.oxmysql:execute('UPDATE players SET job = ? WHERE citizenid = ?', { json.encode(job), target })
-			TriggerClientEvent('QBCore:Notify', src, "Dipendente licenziato!", "success")
+			TriggerClientEvent('QBCore:Notify', src, "Employee fired!", "success")
 			TriggerEvent("qb-log:server:CreateLog", "bossmenu", "Job Fire", "red", Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. ' successfully fired ' .. Employee.PlayerData.charinfo.firstname .. " " .. Employee.PlayerData.charinfo.lastname .. " (" .. Player.PlayerData.job.name .. ")", false)
 		else
-			TriggerClientEvent('QBCore:Notify', src, "Giocatore offline", "error")
+			TriggerClientEvent('QBCore:Notify', src, "Civilian not in city.", "error")
 		end
 	end
 	TriggerClientEvent('qb-bossmenu:client:mainmenu', src)
@@ -187,8 +187,8 @@ RegisterNetEvent('qb-bossmenu:server:reclutaGiocatore', function(recruit)
 	local Target = QBCore.Functions.GetPlayer(recruit)
 	if Player.PlayerData.job.isboss == true then
 		if Target and Target.Functions.SetJob(Player.PlayerData.job.name, 0) then
-			TriggerClientEvent('QBCore:Notify', src, "Hai assunto " .. (Target.PlayerData.charinfo.firstname .. ' ' .. Target.PlayerData.charinfo.lastname) .. " come " .. Player.PlayerData.job.label .. "", "success")
-			TriggerClientEvent('QBCore:Notify', Target.PlayerData.source , "Sei stato assunto come " .. Player.PlayerData.job.label .. "", "success")
+			TriggerClientEvent('QBCore:Notify', src, "You hired " .. (Target.PlayerData.charinfo.firstname .. ' ' .. Target.PlayerData.charinfo.lastname) .. " come " .. Player.PlayerData.job.label .. "", "success")
+			TriggerClientEvent('QBCore:Notify', Target.PlayerData.source , "You were hired as " .. Player.PlayerData.job.label .. "", "success")
 			TriggerEvent('qb-log:server:CreateLog', 'bossmenu', 'Recruit', "lightgreen", (Player.PlayerData.charinfo.firstname .. ' ' .. Player.PlayerData.charinfo.lastname).. " successfully recruited " .. (Target.PlayerData.charinfo.firstname .. ' ' .. Target.PlayerData.charinfo.lastname) .. ' (' .. Player.PlayerData.job.name .. ')', true)
 		end
 	end
