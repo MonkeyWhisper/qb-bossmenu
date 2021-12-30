@@ -1,6 +1,6 @@
 # qb-bossmenu
 New bossmenu converted to qb-menu and qb-input.
-qb-bossmenu and qb-gangmenu converted to qb-menu, merged into a single resource, and saves the account in the database
+qb-bossmenu and qb-gangmenu converted to qb-menu, merged into a single resource, and saves the account in the database.
 I have converted the function that looks for server-side players, so that I can have more information about the players nearby.
 I rewrote most of the events.
 if there are any problems or other, do not hesitate to contact me or to open a pool request
