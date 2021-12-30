@@ -22,7 +22,7 @@ if there are any problems or other, do not hesitate to contact me or to open a p
 - Download the script and put it in the `[qb]` directory.
 - Import `qb-bossmenu.sql` in your database
 - Edit config.lua with coords
-- Add the following code to your server.cfg/resouces.cfg
+- Add the following code `ensure qb-bossmenu` to your server.cfg/resouces.cfg
 
 ## ATTENTION
 ### YOU NEED TO CREATE A COLUMN IN DATABASE WITH NAME OF SOCIETY IN BOSSMENU TABLE OR GANG IN GANGMENU TABLE
