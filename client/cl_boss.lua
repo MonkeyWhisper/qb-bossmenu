@@ -18,11 +18,11 @@ RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo)
 end)
 
 RegisterNetEvent('qb-bossmenu:client:inventario', function()
-    TriggerServerEvent("inventory:server:OpenInventory", "stash", "Inv_" .. PlayerJob.label, {
+    TriggerServerEvent("inventory:server:OpenInventory", "stash", "boss_" .. PlayerJob.label, {
         maxweight = 4000000,
         slots = 100,
     })
-    TriggerEvent("inventory:client:SetCurrentStash", "Inv_" .. PlayerJob.label)
+    TriggerEvent("inventory:client:SetCurrentStash", "boss_" .. PlayerJob.label)
 end)
 
 RegisterNetEvent('qb-bossmenu:client:guardaroba', function()
