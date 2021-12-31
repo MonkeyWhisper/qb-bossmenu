@@ -18,11 +18,11 @@ RegisterNetEvent('QBCore:Client:OnGangUpdate', function(InfoGang)
 end)
 
 RegisterNetEvent('qb-gangmenu:client:inventario', function()
-    TriggerServerEvent("inventory:server:OpenInventory", "stash", "Inv_" .. PlayerGang.label, {
-        maxweight = 5000000,
+    TriggerServerEvent("inventory:server:OpenInventory", "stash", "boss_" .. PlayerGang.label, {
+        maxweight = 2000000,
         slots = 100,
     })
-    TriggerEvent("inventory:client:SetCurrentStash", "Inv_" .. PlayerGang.label)
+    TriggerEvent("inventory:client:SetCurrentStash", "boss_" .. PlayerGang.label)
 end)
 
 RegisterNetEvent('qb-gangmenu:client:guardaroba', function()
